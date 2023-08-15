@@ -10,4 +10,4 @@ This draft was inspired by multiple sources:
 - [https://statisticsblazordotnet6.azureedge.net/](https://statisticsblazordotnet6.azureedge.net/)
 - [https://swimburger.net/blog/dotnet/how-to-deploy-aspnet-blazor-webassembly-to-github-pages](https://swimburger.net/blog/dotnet/how-to-deploy-aspnet-blazor-webassembly-to-github-pages)
 - [https://learn.microsoft.com/en-us/training/browse/?terms=Blazor](https://learn.microsoft.com/en-us/training/browse/?terms=Blazor)
-
+- [https://stattrek.com/online-calculator/hypergeometric](https://stattrek.com/online-calculator/hypergeometric)
