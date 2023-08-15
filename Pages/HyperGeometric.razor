@@ -1,0 +1,75 @@
+@page "/hypergeometric"
+
+<PageTitle>Hypergeometric Calculator</PageTitle>
+
+<h1>Hypergeometric Calculator</h1>
+
+<div>Population : <input style="margin-bottom: 10px;" type="text" @bind="population"/></div>
+
+<div>#successes : <input style="margin-bottom: 10px;" type="text" @bind="successes"/></div>
+
+<div>#draws     : <input style="margin-bottom: 10px;" type="text" @bind="draws"/></div>
+
+<div>#occurences: <input style="margin-bottom: 10px;" type="text" @bind="occurences"/></div>
+
+<p>Hypergeometric probability: P(X=1) : @pxequals1</p>
+<p>Cumulative probability: P(X &lt; 1) : @pxlessthan1</p>
+<p>Cumulative probability: P(X &lt;= 1) : @pxlessthaneq1</p>
+<p>Cumulative probability: P(X &gt; 1) : @pxgreatthan1</p>
+<p>Cumulative probability: P(X &gt;= 1) : @pxgreatthaneq1</p>
+
+<p style="color: red;" >@error</p>
+
+<button @onclick="Calculate">Calculate</button>
+
+@code {
+    string population;
+    string successes;
+    string draws;
+    string occurences;
+    string pxequals1;
+    string pxlessthan1;
+    string pxlessthaneq1;
+    string pxgreatthan1;
+    string pxgreatthaneq1;
+    string error;
+    string output;
+
+    private void Calculate() {
+        int popval; 
+        int sucval;
+        int drawval;
+        int occval;
+        bool pop_is_int = int.TryParse(population, out popval);
+        bool suc_is_int = int.TryParse(successes, out sucval);
+        bool draw_is_int = int.TryParse(draws, out drawval);
+        bool occ_is_int = int.TryParse(occurences, out occval);
+
+        if (pop_is_int & suc_is_int & draw_is_int & occ_is_int) 
+        {
+            bool is_param = MathNet.Numerics.Distributions.Hypergeometric.IsValidParameterSet(popval, sucval, drawval);
+            if (is_param) 
+            {
+                double cum = MathNet.Numerics.Distributions.Hypergeometric.CDF(popval, sucval, drawval, occval);
+                double hyper = MathNet.Numerics.Distributions.Hypergeometric.PMF(popval, sucval, drawval, occval);
+
+                pxequals1 = hyper.ToString();
+                pxlessthan1 = (cum - hyper).ToString();
+                pxlessthaneq1 = cum.ToString();
+                pxgreatthan1 = (1 - cum).ToString();
+                pxgreatthaneq1 = (1 - cum + hyper).ToString();
+
+            }
+            else 
+            {
+                error = "Parameters are not valid";
+            }
+        }
+        else 
+        {
+            error = "All parameters must be integers";
+        }
+
+        //result = new  MathNet.Numerics.Distributions.Hypergeometric.CDF(int population, int success, int draws, double x)
+    }
+}
